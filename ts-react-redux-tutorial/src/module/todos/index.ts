@@ -1,57 +1,6 @@
-import {deprecated, ActionType, createReducer, action} from 'typesafe-actions';
-
-const {createStandardAction} = deprecated;
-
-const ADD_TODO = 'todos/ADD_TODO' as const; // 파라미터로 받아오는 값이랑, 페이로드값이랑 다른 경우는 createAction을 사용하지 않는 편이 깔끔할 수 있다.
-const TOGGLE_TODO = 'todos/TOGGLE_TODO';
-const REMOVE_TODO = 'todos/REMOVE_TODO';
-
-let nextId = 1;
-
-export const addTodo = (text: string) => ({
-    type: ADD_TODO,
-    payload: {
-        id: nextId++,
-        text
-    }
-})
-
-export const toggleTodo = createStandardAction(TOGGLE_TODO)<number>();
-export const removeTodo = createStandardAction(REMOVE_TODO)<number>();
-
-const actions = {
-    addTodo,
-    removeTodo,
-    toggleTodo
-}
-type TodoAction = ActionType<typeof actions>;
-
-export type Todo = {
-    id: number;
-    text: string;
-    done: boolean;
-}
-
-type TodosState = Todo[];
-
-const initialState: TodosState = [];
-
-const todos = createReducer<TodosState, TodoAction>(initialState, {
-    [ADD_TODO]: (state, action) => state.concat({
-        ...action.payload,
-        done: false
-    }),
-    [TOGGLE_TODO]: (state, action) => state.map(
-        todo => todo.id === action.payload
-            ? {...todo, done: !todo.done}
-            : todo
-    ),
-    [REMOVE_TODO]: (state, action) => state.filter(
-        todo => todo.id !== action.payload
-    )
-})
-
-export default todos;
+export {default} from "./reducer"
+export * from "./actions"
+export * from "./tyeps"
 
 // const ADD_TODO = 'todos/ADD_TODO' ;
 // const TOGGLE_TODO = 'todos/TOGGLE_TODO' ;
@@ -82,13 +31,13 @@ export default todos;
 //     | ReturnType<typeof toggleTodo>
 //     | ReturnType<typeof removeTodo>
 //
-// export type Todo = {
+// export type Index = {
 //     id: number;
 //     text: string;
 //     done: boolean;
 // }
 //
-// type TodosState = Todo[];
+// type TodosState = Index[];
 //
 // const initialState: TodosState = [];
 //
