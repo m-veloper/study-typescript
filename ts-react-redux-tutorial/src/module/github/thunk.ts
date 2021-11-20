@@ -1,10 +1,8 @@
-import {useDispatch} from "react-redux";
 import {Dispatch} from "redux";
 import {RootState} from "../index";
 import {getUserProfile} from "../../api/github";
 import {getUserProfileAsync} from "./actions";
-import any = jasmine.any;
-import {AxiosError} from "axios";
+
 
 export function getUserProfileThunk(userName: string) {
     return async (dispatch: Dispatch, getState: () => RootState) => {
